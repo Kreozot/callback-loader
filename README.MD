@@ -1,5 +1,6 @@
 # callback-loader
 [![Build Status](https://travis-ci.org/Kreozot/callback-loader.svg?branch=master)](https://travis-ci.org/Kreozot/callback-loader)
+[![npm version](https://badge.fury.io/js/callback-loader.svg)](https://badge.fury.io/js/callback-loader)
 
 Webpack loader that parses your JS, calls specified functions and replaces their with the results.
 
