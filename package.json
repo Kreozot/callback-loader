@@ -1,10 +1,10 @@
 {
   "name": "callback-loader",
   "version": "0.0.1",
-  "description": "Webpack loader that parse your JS-file, call specified functions and replace their with results",
+  "description": "Webpack loader that parse your JS-file, call specified functions and replace their call expressions with results",
   "main": "callback-loader.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "keywords": [
     "webpack",
@@ -17,6 +17,12 @@
   "author": "Kreozot",
   "license": "ISC",
   "dependencies": {
-    "acorn": "^2.4.0"
+    "ast-query": "^1.0.1",
+    "loader-utils": "^0.2.11"
+  },
+  "devDependencies": {
+    "mocha": "^2.3.3",
+    "should": "^7.1.0",
+    "webpack": "^1.12.2"
   }
 }
