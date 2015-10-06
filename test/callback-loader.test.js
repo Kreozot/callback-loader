@@ -5,14 +5,27 @@ var loader = require("../");
 describe("loader", function() {
 
 	var options = {
-		multBy2: function(num) {
-			return num * 2;
+		callbackLoader: {
+			multBy2: function(num) {
+				return num * 2;
+			},
+			mult: function(num1, num2) {
+				return num1 * num2;
+			},
+			concat: function(str1, str2) {
+				return '"' + str1 + str2 + '"';
+			}
 		},
-		mult: function(num1, num2) {
-			return num1 * num2;
-		},
-		concat: function(str1, str2) {
-			return '"' + str1 + str2 + '"';
+		callbackLoader2: {
+			multBy2: function(num) {
+				return num * 2;
+			},
+			mult: function(num1, num2) {
+				return num1 * num2;
+			},
+			concat: function(str1, str2) {
+				return '"' + str1 + str2 + '-version2"';
+			}
 		}
 	}
 
@@ -63,6 +76,16 @@ describe("loader", function() {
 			}, 'var a = concat("foo", "bar");')
 			.should.be.eql(
 				'var a = "foobar";'
+			);
+	});
+
+	it("should take another config", function() {
+		loader.call({
+				options: options,
+				query: '?config=callbackLoader2'
+			}, 'var a = concat("foo", "bar");')
+			.should.be.eql(
+				'var a = "foobar-version2";'
 			);
 	});
 	

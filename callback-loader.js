@@ -3,9 +3,12 @@ var loaderUtils = require("loader-utils");
 
 module.exports = function (source) {
 	var query = loaderUtils.parseQuery(this.query);
+	var configKey = query.config || 'callbackLoader';
 
-	var functions = this.options;
-	var functionNames = Object.keys(query);
+	var functions = this.options[configKey];
+	var functionNames = Object.keys(query).filter(function (key) {
+		return key !== 'config';
+	});
 	if (functionNames.length === 0) {
 		functionNames = Object.keys(functions);
 	}
