@@ -1,6 +1,6 @@
 # callback-loader
 
-Webpack loader that parse your JS-file, call specified functions and replace their call expressions with the results.
+Webpack loader that parses your JS, calls specified functions and replaces their with the results.
 
 ## Installation
 

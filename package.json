@@ -1,7 +1,7 @@
 {
   "name": "callback-loader",
   "version": "0.0.1",
-  "description": "Webpack loader that parse your JS-file, call specified functions and replace their call expressions with results",
+  "description": "Webpack loader that parses your JS, calls specified functions and replaces their with the results.",
   "main": "callback-loader.js",
   "scripts": {
     "test": "mocha"
