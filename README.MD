@@ -4,7 +4,7 @@ Webpack loader that parses your JS, calls specified functions and replaces their
 
 ## Installation
 
-`npm install callback-loader`
+`npm install callback-loader --save-dev`
 
 ## Usage
 
@@ -97,4 +97,4 @@ var c = "foobar-version2";
 
 ## Restrictions
 
-No expressions in function arguments, sorry. Only raw values.
+No expressions and variables in function arguments yet, sorry. Only raw values.
