@@ -131,15 +131,15 @@ Let's write something like this:
 module.exports = [
     {
         name: 'Moscow',
-        coords: okGoogleGiveMeCoords('Moscow, Russia')
+        coords: okGoogleGiveMeTheCoords('Moscow, Russia')
     }, {
         name: 'Tokyo',
-        coords: okGoogleGiveMeCoords('Tokyo, Japan')
+        coords: okGoogleGiveMeTheCoords('Tokyo, Japan')
     }, ...
 ]
 ```
 
-Looks much more pretty, right? Now we just need to implement *okGoogleGiveMeCoords* and config callback-loader:
+Looks much more pretty, right? Now we just need to implement *okGoogleGiveMeTheCoords* and config callback-loader:
 
 ``` javascript
 var request = require('sync-request');
@@ -148,7 +148,7 @@ var request = require('sync-request');
 {
     ...
     pointsCallback: {
-        getCoords: function (address) {
+        okGoogleGiveMeTheCoords: function (address) {
             var response = request('GET', 'http://maps.google.com/maps/api/geocode/json?address=' + address + '&sensor=false');
             var data = JSON.parse(response.getBody());
             var coords = data.results[0].geometry.location;
