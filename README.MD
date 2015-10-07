@@ -100,3 +100,67 @@ var c = "foobar-version2";
 ## Restrictions
 
 No expressions and variables in function arguments yet, sorry. Only raw values.
+
+## Use cases
+
+* Build time cache.
+* Using node modules.
+* Using any other build-time stuff (compiler directives, version number, parameters, etc)
+
+## Real life example
+
+Ok, let's say we need an array of points for a map in *points.js* file:
+
+``` javascript
+module.exports = [
+    {
+        name: 'Moscow',
+        coords: [37.617, 55.756]
+    }, {
+        name: 'Tokyo',
+        coords: [139.692, 35.689]
+    }, ...
+]
+```
+
+But we don't want to search and write coordinates by yourself. We just want to type city names and let Google Maps API do the REST. But at the same time it's not a good idea to send hundreds of requests each time user open your map. Can we do this once in a build time?
+
+Let's write something like this:
+
+``` javascript
+module.exports = [
+    {
+        name: 'Moscow',
+        coords: okGoogleGiveMeCoords('Moscow, Russia')
+    }, {
+        name: 'Tokyo',
+        coords: okGoogleGiveMeCoords('Tokyo, Japan')
+    }, ...
+]
+```
+
+Looks much more pretty, right? Now we just need to implement *okGoogleGiveMeCoords* and config callback-loader:
+
+``` javascript
+var request = require('sync-request');
+...
+// Webpack config:
+{
+    ...
+    pointsCallback: {
+        getCoords: function (address) {
+            var response = request('GET', 'http://maps.google.com/maps/api/geocode/json?address=' + address + '&sensor=false');
+            var data = JSON.parse(response.getBody());
+            var coords = data.results[0].geometry.location;
+            return '[' + coords.lng + ', ' + coords.lat + ']';
+        }
+    }
+```
+
+Now write a *require* statement:
+
+``` javascript
+var points = require('callback?config=pointsCallback!./points.js');
+```
+
+And in *points* we have the array from the first example but we didn't write none of coordinates.
