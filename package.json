@@ -1,11 +1,12 @@
 {
   "name": "callback-loader",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Webpack loader that parses your JS, calls specified functions and replaces their with the results.",
   "main": "callback-loader.js",
   "scripts": {
     "test": "mocha"
   },
+  "repository": "https://github.com/Kreozot/callback-loader",
   "keywords": [
     "webpack",
     "loader",
