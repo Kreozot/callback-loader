@@ -144,8 +144,7 @@ Looks much more pretty, right? Now we just need to implement *okGoogleGiveMeTheC
 ``` javascript
 var request = require('sync-request');
 ...
-// Webpack config:
-{
+var webpackConfig = {
     ...
     pointsCallback: {
         okGoogleGiveMeTheCoords: function (address) {
@@ -155,6 +154,7 @@ var request = require('sync-request');
             return '[' + coords.lng + ', ' + coords.lat + ']';
         }
     }
+}
 ```
 
 Now write a *require* statement:
