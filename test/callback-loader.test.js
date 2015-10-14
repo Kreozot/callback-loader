@@ -42,6 +42,16 @@ describe("loader", function() {
 			);
 	});
 
+	it("should process complicated structure", function() {
+		loader.call({
+				options: options,
+				query: ''
+			}, 'var a = multBy2(10); var b = mult(10, 3); var c = multBy2(12); var d = mult(12, 3);')
+			.should.be.eql(
+				'var a = 20; var b = 30; var c = 24; var d = 36;'
+			);
+	});
+
 	it("should process one function with one parameter", function() {
 		loader.call({
 				options: options,

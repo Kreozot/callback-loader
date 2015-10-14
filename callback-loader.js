@@ -15,7 +15,7 @@ module.exports = function (source) {
 	}
 
 	//Offset for future replaces
-	var indexOffset = 0;
+	var indexOffset;
 
 	//Replace substring between *indexFrom* and *indexTo* in *text* with *replaceText*
 	function replaceIn(text, indexFrom, indexTo, replaceText) {
@@ -26,10 +26,11 @@ module.exports = function (source) {
 		return text.substr(0, actualIndexFrom) + replaceText + text.substr(actualIndexTo, text.length);
 	}
 
-	var ast = astQuery(source);
-
 	functionNames.forEach(function (funcName) {
+		var ast = astQuery(source);
 		var query = ast.callExpression(funcName);
+
+		indexOffset = 0;
 
 		query.nodes.forEach(function (node) {
 			var args = node.arguments.map(function (argument) {
@@ -45,10 +46,10 @@ module.exports = function (source) {
 					console.error(msg);
 					throw msg;
 				}
-				return argument.value;
 			});
 			var value = functions[funcName].apply(null, args);
 			source = replaceIn(source, node.range[0], node.range[1], value.toString());
+			console.log (source);
 		});
 	});
 
