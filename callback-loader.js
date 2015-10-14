@@ -1,5 +1,6 @@
 var astQuery = require("ast-query");
 var loaderUtils = require("loader-utils");
+var escodegen = require("escodegen");
 
 module.exports = function (source) {
 	var query = loaderUtils.parseQuery(this.query);
@@ -32,8 +33,17 @@ module.exports = function (source) {
 
 		query.nodes.forEach(function (node) {
 			var args = node.arguments.map(function (argument) {
-				if (argument.type !== 'Literal') {
-					throw 'Error when parsing arguments of function ' + funcName + '. Only absolute values accepted. Index: ' + argument.range[0];
+				if (argument.type == 'Literal') {
+					return argument.value;
+				} else if (argument.type == 'ObjectExpression') {
+					var value = escodegen.generate(argument, {format: {json: true}});
+					var value = value.replace(/([A-z]+):/g, '"$1":');
+					var value = JSON.parse(value);
+					return value;
+				} else {
+					var msg = 'Error when parsing arguments of function ' + funcName + '. Only absolute values accepted. Index: ' + argument.range[0];
+					console.error(msg);
+					throw msg;
 				}
 				return argument.value;
 			});

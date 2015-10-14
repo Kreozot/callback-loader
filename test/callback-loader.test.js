@@ -14,6 +14,9 @@ describe("loader", function() {
 			},
 			concat: function(str1, str2) {
 				return '"' + str1 + str2 + '"';
+			},
+			getSecond: function(obj) {
+				return obj['second'];
 			}
 		},
 		callbackLoader2: {
@@ -86,6 +89,16 @@ describe("loader", function() {
 			}, 'var a = concat("foo", "bar");')
 			.should.be.eql(
 				'var a = "foobar-version2";'
+			);
+	});
+
+	it("should process function with object args", function() {
+		loader.call({
+				options: options,
+				query: ''
+			}, 'var a = getSecond({first: 1, second: 2});')
+			.should.be.eql(
+				'var a = 2;'
 			);
 	});
 	
