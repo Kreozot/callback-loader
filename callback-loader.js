@@ -51,7 +51,6 @@ module.exports = function (source) {
 			});
 			var value = functions[funcName].apply(self, args);
 			source = replaceIn(source, node.range[0], node.range[1], value.toString());
-			console.log (source);
 		});
 	});
 
