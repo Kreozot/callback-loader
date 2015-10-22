@@ -3,6 +3,8 @@ var loaderUtils = require("loader-utils");
 var escodegen = require("escodegen");
 
 module.exports = function (source) {
+    this.cacheable();
+    var self = this;
 	var query = loaderUtils.parseQuery(this.query);
 	var configKey = query.config || 'callbackLoader';
 
@@ -47,7 +49,7 @@ module.exports = function (source) {
 					throw msg;
 				}
 			});
-			var value = functions[funcName].apply(null, args);
+			var value = functions[funcName].apply(self, args);
 			source = replaceIn(source, node.range[0], node.range[1], value.toString());
 			console.log (source);
 		});
