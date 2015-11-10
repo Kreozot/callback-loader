@@ -6,38 +6,43 @@ loader.cacheable = function() {};
 
 describe("loader", function() {
 
-	var options = {
-		callbackLoader: {
-			multBy2: function(num) {
-				return num * 2;
+	var options,
+		context;
+
+	beforeEach(function() {
+		options = {
+			callbackLoader: {
+				multBy2: function(num) {
+					return num * 2;
+				},
+				mult: function(num1, num2) {
+					return num1 * num2;
+				},
+				concat: function(str1, str2) {
+					return '"' + str1 + str2 + '"';
+				},
+				getSecond: function(obj) {
+					return obj['second'];
+				}
 			},
-			mult: function(num1, num2) {
-				return num1 * num2;
-			},
-			concat: function(str1, str2) {
-				return '"' + str1 + str2 + '"';
-			},
-			getSecond: function(obj) {
-				return obj['second'];
-			}
-		},
-		callbackLoader2: {
-			multBy2: function(num) {
-				return num * 2;
-			},
-			mult: function(num1, num2) {
-				return num1 * num2;
-			},
-			concat: function(str1, str2) {
-				return '"' + str1 + str2 + '-version2"';
+			callbackLoader2: {
+				multBy2: function(num) {
+					return num * 2;
+				},
+				mult: function(num1, num2) {
+					return num1 * num2;
+				},
+				concat: function(str1, str2) {
+					return '"' + str1 + str2 + '-version2"';
+				}
 			}
 		}
-	}
 
-	var context = {
-		cacheable: function() {},
-		options: options
-	};
+		context = {
+			cacheable: function() {},
+			options: options
+		};
+	});
 
 	it("should process all functions without query", function() {
 		context.query = '';
@@ -97,7 +102,7 @@ describe("loader", function() {
 
 	it("should process function with object args", function() {
 		context.query = '';
-		loader.call(context, 'var a = getSecond({first: 1, second: 2});')
+		var result = loader.call(context, 'var a = getSecond({first: 1, second: 2});')
 			.should.be.eql(
 				'var a = 2;'
 			);
