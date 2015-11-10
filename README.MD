@@ -124,7 +124,7 @@ The loader is cacheable by default, but you can disable cache if you want:
 Let's say we have two language versions and we want to use messages for both of them in a same place, like this:
 
 ```javascript
-showMessage(localize{en: 'Hello, world!', en: 'Привет, мир!'});
+showMessage(localize{en: 'Hello, world!', ru: 'Привет, мир!'});
 ```
 
 But in this case we should require *localize* function everywhere. Besides it is an redundant call and excess result code size.
