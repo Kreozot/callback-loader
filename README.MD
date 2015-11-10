@@ -97,6 +97,14 @@ var b = mult(10, 3);
 var c = "foobar-version2";
 ```
 
+### Cache
+
+The loader is cacheable by default, but you can disable cache if you want:
+
+```javascript
+'callback?cacheable=false!example.js'
+```
+
 ## Restrictions
 
 * No expressions and variables in function arguments yet, sorry. Only raw values.
