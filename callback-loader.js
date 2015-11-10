@@ -1,16 +1,21 @@
-var astQuery = require("ast-query");
-var loaderUtils = require("loader-utils");
-var escodegen = require("escodegen");
+var astQuery = require('ast-query');
+var loaderUtils = require('loader-utils');
+var escodegen = require('escodegen');
 
 module.exports = function (source) {
-    this.cacheable();
-    var self = this;
+	var self = this;
 	var query = loaderUtils.parseQuery(this.query);
 	var configKey = query.config || 'callbackLoader';
+	var cacheable = (typeof query.cacheable !== 'undefined') ? query.cacheable : true;
+	if (cacheable) {
+		this.cacheable();
+	}
+	//Disabling async mode for this loader.
+	this.async = function() {};
 
 	var functions = this.options[configKey];
 	var functionNames = Object.keys(query).filter(function (key) {
-		return key !== 'config';
+		return (key !== 'config') && (key !== 'cacheable');
 	});
 	if (functionNames.length === 0) {
 		functionNames = Object.keys(functions);
@@ -55,4 +60,4 @@ module.exports = function (source) {
 	});
 
 	return source;
-}
+};
