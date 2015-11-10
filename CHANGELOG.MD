@@ -1,3 +1,6 @@
+## 0.2.3
+- Option for disable cache
+
 ## 0.2.2
 - The loader became cacheable
 - Callbacks now calls with loader context in **this**
