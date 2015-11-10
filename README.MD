@@ -148,13 +148,13 @@ That's all! Now take a look at our localized code.
 bundle.en.js:
 
 ```javascript
-showMessage('Hello, world!');
+showMessage("Hello, world!");
 ```
 
 bundle.ru.js
 
 ```javascript
-showMessage('Привет, мир!');
+showMessage("Привет, мир!");
 ```
 
 ### Using API at build time
