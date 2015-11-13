@@ -222,3 +222,41 @@ var points = require('callback?config=pointsCallback!./points.js');
 ```
 
 And in *points* we have the array from the first example but we didn't write none of coordinates.
+
+### Using dynamic formed requires
+
+Webpack only knows about requires which had been written by your hands. But what if we want to write requires by a script? E.g. we want to require all modules from array (in case we need to configure them in external config).
+
+components.js
+```javascript
+module.exports = function () {
+    requireComponents();
+};
+```
+
+webpack config
+```javascript
+    callbackLoader: {
+        requireComponents: function() {
+            var modules = ["menu", "buttons", "forms"];
+            return modules.map(function (module) {
+                var moduleLink = 'components/' + module + '/index.js';
+                return 'require("' + moduleLink + '");';
+            }).join('\n');
+        }
+    }
+```
+
+So if we load our *components.js* with callback-loader, result will be this:
+```javascript
+module.exports = function () {
+    require("components/menu/index.js");
+    require("components/buttons/index.js");
+    require("components/forms/index.js");
+};
+```
+
+Now we have to apply this script (using apply-loader which simply adds an execution statement to the module) and all this dependencies will be resolved:
+```javascript
+require('apply!callback!./components.js');
+```
