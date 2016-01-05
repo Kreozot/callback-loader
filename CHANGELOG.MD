@@ -1,3 +1,6 @@
+## 0.2.4
+- Fixed error with colons in object arguments (#2).
+
 ## 0.2.3
 - Option for disable cache
 
