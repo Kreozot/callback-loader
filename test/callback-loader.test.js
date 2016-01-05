@@ -2,9 +2,9 @@ var should = require("should");
 var path = require("path");
 var loader = require("../");
 
-loader.cacheable = function() {};
+loader.cacheable = function () {};
 
-describe("loader", function() {
+describe("loader", function () {
 
 	var options,
 		context;
@@ -23,7 +23,10 @@ describe("loader", function() {
 				},
 				getSecond: function(obj) {
 					return obj['second'];
-				}
+				},
+				urlParse: function (urls) {
+			    	return '"' + urls.arg1 + '"';
+			    }
 			},
 			callbackLoader2: {
 				multBy2: function(num) {
@@ -107,5 +110,13 @@ describe("loader", function() {
 				'var a = 2;'
 			);
 	});
-	
+
+	it("should not breaks at urls", function() {
+		context.query = '';
+		loader.call(context, 'const url = urlParse({arg1: "http://localhost:8000/", arg2: "http://localhost:8000/"});')
+			.should.be.eql(
+				'const url = "http://localhost:8000/";'
+			);
+	});
+
 });

@@ -45,8 +45,9 @@ module.exports = function (source) {
 					return argument.value;
 				} else if (argument.type == 'ObjectExpression') {
 					var value = escodegen.generate(argument, {format: {json: true}});
-					var value = value.replace(/([A-z]+):/g, '"$1":');
-					var value = JSON.parse(value);
+					// Take the keys of the object to quotes for JSON.parse
+					value = value.replace(/([{,])(?:\s*)([A-Za-z0-9_\-]+?)\s*:/g, '$1"$2":');
+					value = JSON.parse(value);
 					return value;
 				} else {
 					var msg = 'Error when parsing arguments of function ' + funcName + '. Only absolute values accepted. Index: ' + argument.range[0];
